@@ -11,7 +11,8 @@
             "require": "./dist/index.umd.js",
             "types": "./dist/index.d.ts"
         },
-        "./styles": "./dist/style.css"
+        "./styles": "./dist/customer_support.css",
+        "./dist/customer_support.css": "./dist/customer_support.css"
     },
     "files": [
         "dist",
@@ -67,6 +68,7 @@
         "@vitejs/plugin-react": "^4.3.4",
         "eslint": "^9.18.0",
         "eslint-plugin-react-hooks": "^5.1.0",
+        "globals": "^16.5.0",
         "prettier": "^3.4.2",
         "typescript": "^5.7.3",
         "vite": "^6.0.11",
