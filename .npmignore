@@ -1,0 +1,28 @@
+# Source files
+src/
+*.test.ts
+*.test.tsx
+__tests__/
+
+# Configuration files
+tsconfig.json
+vite.config.ts
+.eslintrc.js
+.prettierrc
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+
+# Documentation (kept in npm, but minimal)
+examples/
+
+# Development files
+.vscode/
+.idea/
+.DS_Store
+
+# Logs and temp
+*.log
+.env
+.env.*

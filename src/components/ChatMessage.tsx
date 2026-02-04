@@ -1,0 +1,47 @@
+import React from 'react';
+import type { Message as MessageType } from '../types';
+import { ExternalLink } from 'lucide-react';
+
+interface ChatMessageProps {
+    message: MessageType;
+}
+
+export const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
+    const isUser = message.role === 'USER';
+
+    return (
+        <div className={`cs-message ${isUser ? 'cs-message--user' : 'cs-message--assistant'}`}>
+            <div className="cs-message__content">
+                <p className="cs-message__text">{message.content}</p>
+
+                {message.sources && message.sources.length > 0 && (
+                    <div className="cs-message__sources">
+                        <p className="cs-message__sources-title">Sources:</p>
+                        <ul className="cs-message__sources-list">
+                            {message.sources.map((source, index) => (
+                                <li key={index} className="cs-message__source-item">
+                                    <a
+                                        href={source.url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="cs-message__source-link"
+                                    >
+                                        <ExternalLink size={12} />
+                                        <span>{source.title}</span>
+                                    </a>
+                                    <span className="cs-message__source-similarity">
+                                        {Math.round(source.similarity * 100)}% match
+                                    </span>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
+            </div>
+
+            <time className="cs-message__time">
+                {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+            </time>
+        </div>
+    );
+};

@@ -1,0 +1,76 @@
+{
+    "name": "@tarxemo/customer_support",
+    "version": "1.0.0",
+    "description": "A professional React component library for AI-powered customer support integration",
+    "main": "./dist/index.umd.js",
+    "module": "./dist/index.es.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "import": "./dist/index.es.js",
+            "require": "./dist/index.umd.js",
+            "types": "./dist/index.d.ts"
+        },
+        "./styles": "./dist/style.css"
+    },
+    "files": [
+        "dist",
+        "README.md",
+        "LICENSE"
+    ],
+    "scripts": {
+        "dev": "vite",
+        "build": "tsc && vite build",
+        "preview": "vite preview",
+        "test": "vitest",
+        "test:ui": "vitest --ui",
+        "type-check": "tsc --noEmit",
+        "lint": "eslint src --ext ts,tsx",
+        "format": "prettier --write \"src/**/*.{ts,tsx,css}\"",
+        "prepublishOnly": "npm run build"
+    },
+    "keywords": [
+        "react",
+        "customer-support",
+        "chat",
+        "ai",
+        "widget",
+        "chatbot",
+        "support-widget",
+        "rag",
+        "sitewise"
+    ],
+    "author": "Tarxemo",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/tarxemo/customer_support.git"
+    },
+    "bugs": {
+        "url": "https://github.com/tarxemo/customer_support/issues"
+    },
+    "homepage": "https://github.com/tarxemo/customer_support#readme",
+    "peerDependencies": {
+        "react": "^18.0.0 || ^19.0.0",
+        "react-dom": "^18.0.0 || ^19.0.0"
+    },
+    "dependencies": {
+        "axios": "^1.7.9",
+        "lucide-react": "^0.469.0"
+    },
+    "devDependencies": {
+        "@types/node": "^22.10.5",
+        "@types/react": "^18.3.18",
+        "@types/react-dom": "^18.3.5",
+        "@typescript-eslint/eslint-plugin": "^8.36.0",
+        "@typescript-eslint/parser": "^8.36.0",
+        "@vitejs/plugin-react": "^4.3.4",
+        "eslint": "^9.18.0",
+        "eslint-plugin-react-hooks": "^5.1.0",
+        "prettier": "^3.4.2",
+        "typescript": "^5.7.3",
+        "vite": "^6.0.11",
+        "vite-plugin-dts": "^4.4.0",
+        "vitest": "^2.1.8"
+    }
+}

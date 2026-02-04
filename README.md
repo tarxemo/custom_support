@@ -297,13 +297,13 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ## 📞 Support
 
 For issues and questions:
-- GitHub Issues: [github.com/tarxemo/customer-support/issues](https://github.com/tarxemo/customer-support/issues)
-- Documentation: [Full Documentation](https://github.com/tarxemo/customer-support#readme)
+- GitHub Issues: [github.com/tarxemo/customer_support/issues](https://github.com/tarxemo/customer_support/issues)
+- Documentation: [Full Documentation](https://github.com/tarxemo/customer_support#readme)
 
 ## 🔗 Links
 
 - [NPM Package](https://www.npmjs.com/package/@tarxemo/customer_support)
-- [GitHub Repository](https://github.com/tarxemo/customer-support)
+- [GitHub Repository](https://github.com/tarxemo/customer_support)
 - [SiteWise Platform](https://github.com/yourusername/sitewise)
 
 ---
