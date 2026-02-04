@@ -1,4 +1,5 @@
 {
+    "type": "module",
     "name": "@tarxemo/customer_support",
     "version": "1.0.1",
     "description": "A professional React component library for AI-powered customer support integration",
