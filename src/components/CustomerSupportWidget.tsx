@@ -65,7 +65,7 @@ export const CustomerSupportWidget: React.FC<CustomerSupportConfig> = ({
     };
 
     return (
-        <div className={`cs-widget cs-widget--${position} ${className}`}>
+        <div className={`cs-widget cs-widget--${position} ${isOpen ? 'cs-widget--open' : ''} ${className}`}>
             {/* Chat Window */}
             {isOpen && (
                 <ChatWindow

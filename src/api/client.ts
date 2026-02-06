@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosError } from 'axios';
 import type { ChatResponse, ConversationHistoryResponse, ErrorResponse } from '../types';
 
-const DEFAULT_BASE_URL = 'http://localhost:8000/api';
+const DEFAULT_BASE_URL = 'https://customers-services.tarxemo.com/api';
 
 export class CustomerSupportAPIClient {
     private client: AxiosInstance;

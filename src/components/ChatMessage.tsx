@@ -8,6 +8,7 @@ interface ChatMessageProps {
 
 export const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
     const isUser = message.role === 'USER';
+    const timestamp = message.timestamp instanceof Date ? message.timestamp : new Date(message.timestamp);
 
     return (
         <div className={`cs-message ${isUser ? 'cs-message--user' : 'cs-message--assistant'}`}>
@@ -39,8 +40,8 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
                 )}
             </div>
 
-            <time className="cs-message__time">
-                {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+            <time className="cs-message__time" dateTime={timestamp.toISOString()}>
+                {timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
             </time>
         </div>
     );

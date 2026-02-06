@@ -1,7 +1,6 @@
 {
     "type": "module",
     "name": "@tarxemo/customer_support",
-    "version": "1.0.1",
     "description": "A professional React component library for AI-powered customer support integration",
     "main": "./dist/index.umd.js",
     "module": "./dist/index.es.js",
@@ -24,7 +23,7 @@
         "dev": "vite",
         "build": "tsc && vite build",
         "preview": "vite preview",
-  "test": "vitest run --passWithNoTests",
+        "test": "vitest run --passWithNoTests",
         "test:ui": "vitest --ui",
         "type-check": "tsc --noEmit",
         "lint": "eslint src --ext ts,tsx",
@@ -52,13 +51,14 @@
         "url": "https://github.com/tarxemo/customer_support/issues"
     },
     "homepage": "https://github.com/tarxemo/customer_support#readme",
+    "version": "1.0.8",
     "peerDependencies": {
         "react": "^18.0.0 || ^19.0.0",
-        "react-dom": "^18.0.0 || ^19.0.0"
+        "react-dom": "^18.0.0 || ^19.0.0",
+        "lucide-react": ">=0.469.0"
     },
     "dependencies": {
-        "axios": "^1.7.9",
-        "lucide-react": "^0.469.0"
+        "axios": "^1.7.9"
     },
     "devDependencies": {
         "@types/node": "^22.10.5",

@@ -5,7 +5,9 @@ import { resolve } from 'path';
 
 export default defineConfig({
     plugins: [
-        react(),
+        react({
+            jsxRuntime: 'classic'
+        }),
         dts({
             insertTypesEntry: true,
             include: ['src'],
@@ -20,7 +22,7 @@ export default defineConfig({
             fileName: (format) => `index.${format}.js`
         },
         rollupOptions: {
-            external: ['react', 'react-dom'],
+            external: ['react', 'react-dom', 'lucide-react'],
             output: {
                 globals: {
                     react: 'React',
