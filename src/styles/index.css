@@ -11,9 +11,15 @@
     --cs-text-color: #1f2937;
     --cs-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
     --cs-border-radius: 12px;
-    --cs-button-color: #6366f1;
-    --cs-user-message-color: #6366f1;
+
+    /* Derived colors - can be overridden individually if needed */
+    --cs-button-color: var(--cs-primary-color);
+    --cs-user-message-color: var(--cs-primary-color);
     --cs-assistant-message-color: #f3f4f6;
+    --cs-header-gradient: linear-gradient(135deg, var(--cs-primary-color), var(--cs-secondary-color));
+
+    /* Specialized colors */
+    --cs-focus-ring: rgba(99, 102, 241, 0.2);
 
     /* Shadows */
     --cs-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
@@ -55,7 +61,7 @@
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--cs-primary-color), var(--cs-secondary-color));
+    background: var(--cs-header-gradient);
     border: none;
     color: white;
     cursor: pointer;
@@ -68,7 +74,7 @@
 
 .cs-widget__toggle:hover {
     transform: scale(1.1);
-    box-shadow: 0 25px 30px -10px rgba(99, 102, 241, 0.4);
+    box-shadow: 0 15px 25px -5px var(--cs-focus-ring);
 }
 
 .cs-widget__toggle:active {
@@ -128,7 +134,7 @@
 
 /* Window Header */
 .cs-window__header {
-    background: linear-gradient(135deg, var(--cs-primary-color), var(--cs-secondary-color));
+    background: var(--cs-header-gradient);
     color: white;
     padding: 16px 20px;
     display: flex;
@@ -383,7 +389,7 @@
 .cs-input__textarea:focus {
     outline: none;
     border-color: var(--cs-primary-color);
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    box-shadow: 0 0 0 3px var(--cs-focus-ring);
     background-color: var(--cs-bg-color);
 }
 
