@@ -32,25 +32,25 @@ export const CustomerSupportWidget: React.FC<CustomerSupportConfig> = ({
 
     // Map theme to CSS variables
     const themeStyles = React.useMemo(() => {
-        if (!theme) return {};
         const styles: Record<string, string> = {};
-        if (theme.primaryColor) {
-            styles['--cs-primary-color'] = theme.primaryColor;
-            // Also derive focus ring and button/user colors if not explicitly provided
-            if (!theme.buttonColor) styles['--cs-button-color'] = theme.primaryColor;
-            if (!theme.userMessageColor) styles['--cs-user-message-color'] = theme.primaryColor;
 
-            // Try to create a subtle focus ring color if primary is available
-            styles['--cs-focus-ring'] = `${theme.primaryColor}33`; // Add 20% opacity (33 in hex)
+        // Base fallbacks if nothing is provided
+        styles['--cs-primary-color'] = theme?.primaryColor || '#6366f1';
+        styles['--cs-secondary-color'] = theme?.secondaryColor || theme?.primaryColor || '#8b5cf6';
+        styles['--cs-bg-color'] = theme?.backgroundColor || '#ffffff';
+        styles['--cs-text-color'] = theme?.textColor || '#1f2937';
+        styles['--cs-font-family'] = theme?.fontFamily || 'inherit';
+        styles['--cs-border-radius'] = theme?.borderRadius || '12px';
+
+        // Derived or explicit overrides
+        styles['--cs-button-color'] = theme?.buttonColor || theme?.primaryColor || '#6366f1';
+        styles['--cs-user-message-color'] = theme?.userMessageColor || theme?.primaryColor || '#6366f1';
+        styles['--cs-assistant-message-color'] = theme?.assistantMessageColor || '#f3f4f6';
+
+        // Focus ring derivation
+        if (theme?.primaryColor) {
+            styles['--cs-focus-ring'] = `${theme.primaryColor}33`;
         }
-        if (theme.secondaryColor) styles['--cs-secondary-color'] = theme.secondaryColor;
-        if (theme.backgroundColor) styles['--cs-bg-color'] = theme.backgroundColor;
-        if (theme.textColor) styles['--cs-text-color'] = theme.textColor;
-        if (theme.fontFamily) styles['--cs-font-family'] = theme.fontFamily;
-        if (theme.borderRadius) styles['--cs-border-radius'] = theme.borderRadius;
-        if (theme.buttonColor) styles['--cs-button-color'] = theme.buttonColor;
-        if (theme.userMessageColor) styles['--cs-user-message-color'] = theme.userMessageColor;
-        if (theme.assistantMessageColor) styles['--cs-assistant-message-color'] = theme.assistantMessageColor;
 
         return styles as React.CSSProperties;
     }, [theme]);
