@@ -7,7 +7,7 @@ interface ChatMessageProps {
 }
 
 export const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
-    const isUser = message.role === 'USER';
+    const isUser = message.role.toUpperCase() === 'USER';
     const timestamp = message.timestamp instanceof Date ? message.timestamp : new Date(message.timestamp);
 
     return (

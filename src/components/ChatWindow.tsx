@@ -34,7 +34,13 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
         <div className="cs-window">
             {/* Header */}
             <div className="cs-window__header">
-                <h3 className="cs-window__title">Customer Support</h3>
+                <div className="cs-window__header-info">
+                    <h3 className="text-gray-900">Customer Support</h3>
+                    <div className="cs-window__status">
+                        <span className="cs-window__status-dot" />
+                        <span className='text-gray-900'>Online</span>
+                    </div>
+                </div>
                 <button
                     className="cs-window__close"
                     onClick={onClose}

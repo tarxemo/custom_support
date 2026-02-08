@@ -66,6 +66,10 @@ export interface ThemeConfig {
     buttonColor?: string;
     userMessageColor?: string;
     assistantMessageColor?: string;
+    successColor?: string;
+    errorColor?: string;
+    borderColor?: string;
+    shadowColor?: string;
 }
 
 export type Position = 'bottom-right' | 'bottom-left' | 'top-right' | 'top-left';

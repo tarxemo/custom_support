@@ -1,4 +1,4 @@
-import { useState, Dispatch, SetStateAction } from 'react';
+import { useState, Dispatch, SetStateAction, useEffect } from 'react';
 
 /**
  * Custom hook for localStorage with TypeScript support
@@ -18,19 +18,16 @@ export function useLocalStorage<T>(
         }
     });
 
-    // Return a wrapped version of useState's setter function that persists to localStorage
-    const setValue: Dispatch<SetStateAction<T>> = (value) => {
+    // Use useEffect to update localStorage whenever storedValue changes
+    useEffect(() => {
         try {
-            // Allow value to be a function so we have same API as useState
-            const valueToStore = value instanceof Function ? value(storedValue) : value;
-            setStoredValue(valueToStore);
-            window.localStorage.setItem(key, JSON.stringify(valueToStore));
+            window.localStorage.setItem(key, JSON.stringify(storedValue));
         } catch (error) {
             console.warn(`Error setting localStorage key "${key}":`, error);
         }
-    };
+    }, [key, storedValue]);
 
-    return [storedValue, setValue];
+    return [storedValue, setStoredValue];
 }
 
 /**

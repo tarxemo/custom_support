@@ -117,7 +117,7 @@ export function useCustomerSupport(options: UseCustomerSupportOptions): UseCusto
 
             const loadedMessages: Message[] = history.messages.map((msg, index) => ({
                 id: `${msg.role.toLowerCase()}_${index}_${Date.now()}`,
-                role: msg.role,
+                role: msg.role.toUpperCase() as 'USER' | 'ASSISTANT',
                 content: msg.content,
                 timestamp: new Date(msg.created_at)
             }));
