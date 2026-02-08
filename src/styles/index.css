@@ -362,6 +362,14 @@
     min-width: 0;
     /* Allow shrinking below content size */
     animation: fadeIn 0.3s ease-in-out;
+    position: relative;
+    /* For absolute delete button */
+    group: 'message';
+    /* For hover targeting */
+}
+
+.cs-message:hover .cs-message__delete {
+    opacity: 1;
 }
 
 @keyframes fadeIn {
@@ -486,6 +494,41 @@
     color: #6b7280;
     font-size: 11px;
     white-space: nowrap;
+}
+
+/* Delete Message Button */
+.cs-message__delete {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--cs-bg-color);
+    border: 1px solid var(--cs-border-color);
+    color: var(--cs-error-color);
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    transition: all 0.2s;
+    box-shadow: var(--cs-shadow-sm);
+    z-index: 10;
+}
+
+.cs-message__delete:hover {
+    background: var(--cs-error-color);
+    color: white;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.cs-message--user .cs-message__delete {
+    left: -32px;
+}
+
+.cs-message--assistant .cs-message__delete {
+    right: -32px;
 }
 
 /* Input Container */

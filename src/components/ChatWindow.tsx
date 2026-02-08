@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { X, Loader2 } from 'lucide-react';
+import { X, Loader2, Trash2 } from 'lucide-react';
 import { ChatMessage } from './ChatMessage';
 import { ChatInput } from './ChatInput';
 import type { Message } from '../types';
@@ -12,6 +12,8 @@ interface ChatWindowProps {
     error: Error | null;
     placeholder?: string;
     welcomeMessage?: string;
+    onDeleteMessage?: (id: string) => void;
+    onClearHistory?: () => void;
 }
 
 export const ChatWindow: React.FC<ChatWindowProps> = ({
@@ -21,7 +23,9 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
     isLoading,
     error,
     placeholder,
-    welcomeMessage = 'Hi! How can I help you today?'
+    welcomeMessage = 'Hi! How can I help you today?',
+    onDeleteMessage,
+    onClearHistory
 }) => {
     const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -35,19 +39,35 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
             {/* Header */}
             <div className="cs-window__header">
                 <div className="cs-window__header-info">
-                    <h3 className="text-gray-900">Customer Support</h3>
+                    <h3 className="cs-window__title text-gray-900">Customer Support</h3>
                     <div className="cs-window__status">
                         <span className="cs-window__status-dot" />
                         <span className='text-gray-900'>Online</span>
                     </div>
                 </div>
-                <button
-                    className="cs-window__close"
-                    onClick={onClose}
-                    aria-label="Close chat"
-                >
-                    <X size={20} />
-                </button>
+                <div style={{ display: 'flex', gap: '8px' }}>
+                    {messages.length > 0 && onClearHistory && (
+                        <button
+                            className="cs-window__close text-red-500"
+                            onClick={() => {
+                                if (window.confirm('Are you sure you want to clear the entire chat history?')) {
+                                    onClearHistory();
+                                }
+                            }}
+                            aria-label="Clear chat history"
+                            title="Clear chat history"
+                        >
+                            <Trash2 size={18} />
+                        </button>
+                    )}
+                    <button
+                        className="cs-window__close"
+                        onClick={onClose}
+                        aria-label="Close chat"
+                    >
+                        <X size={20} />
+                    </button>
+                </div>
             </div>
 
             {/* Messages */}
@@ -59,7 +79,11 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                 )}
 
                 {messages.map((message) => (
-                    <ChatMessage key={message.id} message={message} />
+                    <ChatMessage
+                        key={message.id}
+                        message={message}
+                        onDelete={onDeleteMessage}
+                    />
                 ))}
 
                 {isLoading && (

@@ -102,4 +102,5 @@ export interface UseCustomerSupportReturn {
     sessionId: string;
     loadHistory: () => Promise<void>;
     clearHistory: () => void;
+    deleteMessage: (id: string) => void;
 }

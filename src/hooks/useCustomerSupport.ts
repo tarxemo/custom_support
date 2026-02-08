@@ -140,6 +140,13 @@ export function useCustomerSupport(options: UseCustomerSupportOptions): UseCusto
         setSessionId(generateSessionId());
     }, [setMessages, setSessionId]);
 
+    /**
+     * Delete a specific message
+     */
+    const deleteMessage = useCallback((id: string) => {
+        setMessages((prev) => prev.filter((msg) => msg.id !== id));
+    }, [setMessages]);
+
     return {
         messages,
         sendMessage,
@@ -148,6 +155,7 @@ export function useCustomerSupport(options: UseCustomerSupportOptions): UseCusto
         clearError,
         sessionId,
         loadHistory,
-        clearHistory
+        clearHistory,
+        deleteMessage
     };
 }

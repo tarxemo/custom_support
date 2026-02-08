@@ -1,12 +1,13 @@
 import React from 'react';
 import type { Message as MessageType } from '../types';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, Trash2 } from 'lucide-react';
 
 interface ChatMessageProps {
     message: MessageType;
+    onDelete?: (id: string) => void;
 }
 
-export const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
+export const ChatMessage: React.FC<ChatMessageProps> = ({ message, onDelete }) => {
     const isUser = message.role.toUpperCase() === 'USER';
     const timestamp = message.timestamp instanceof Date ? message.timestamp : new Date(message.timestamp);
 
@@ -37,6 +38,20 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
                             ))}
                         </ul>
                     </div>
+                )}
+
+                {onDelete && (
+                    <button
+                        className="cs-message__delete"
+                        onClick={() => {
+                            if (window.confirm('Delete this message?')) {
+                                onDelete(message.id);
+                            }
+                        }}
+                        aria-label="Delete message"
+                    >
+                        <Trash2 size={14} />
+                    </button>
                 )}
             </div>
 

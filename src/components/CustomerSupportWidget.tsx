@@ -26,7 +26,9 @@ export const CustomerSupportWidget: React.FC<CustomerSupportConfig> = ({
         sendMessage,
         isLoading,
         error,
-        clearError
+        clearError,
+        deleteMessage,
+        clearHistory
     } = useCustomerSupport({
         apiKey,
         baseUrl,
@@ -185,6 +187,8 @@ export const CustomerSupportWidget: React.FC<CustomerSupportConfig> = ({
                     error={error}
                     placeholder={placeholder}
                     welcomeMessage={welcomeMessage}
+                    onDeleteMessage={deleteMessage}
+                    onClearHistory={clearHistory}
                 />
             )}
 
