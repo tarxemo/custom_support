@@ -51,7 +51,7 @@
         "url": "https://github.com/tarxemo/customer_support/issues"
     },
     "homepage": "https://github.com/tarxemo/customer_support#readme",
-    "version": "1.2.2",
+    "version": "1.2.5",
     "peerDependencies": {
         "react": "^18.0.0 || ^19.0.0",
         "react-dom": "^18.0.0 || ^19.0.0",

@@ -57,15 +57,15 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                             aria-label="Clear chat history"
                             title="Clear chat history"
                         >
-                            <Trash2 size={18} />
+                            <Trash2 size={18} className='text-red-500' />
                         </button>
                     )}
                     <button
-                        className="cs-window__close"
+                        className="cs-window__close text-gray-900"
                         onClick={onClose}
                         aria-label="Close chat"
                     >
-                        <X size={20} />
+                        <X size={20} className='text-gray-900' />
                     </button>
                 </div>
             </div>
