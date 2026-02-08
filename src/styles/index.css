@@ -80,7 +80,7 @@
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    background: var(--cs-header-gradient);
+    background: var(--cs-primary-color);
     border: none;
     color: white;
     cursor: pointer;
