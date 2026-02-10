@@ -1,7 +1,7 @@
-/**
- * @tarxemo/customer_support
- * Professional React component library for AI-powered customer support
- */
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { CustomerSupportWidget } from './components/CustomerSupportWidget';
+import { CustomerSupportConfig } from './types';
 
 // Main component
 export { CustomerSupportWidget } from './components/CustomerSupportWidget';
@@ -31,6 +31,25 @@ export type {
 
 // API Client (for advanced usage)
 export { CustomerSupportAPIClient } from './api/client';
+
+// Global initialization function for CDN/non-React usage
+export const init = (config: CustomerSupportConfig, containerId: string = 'customer-support-root') => {
+    let container = document.getElementById(containerId);
+
+    if (!container) {
+        container = document.createElement('div');
+        container.id = containerId;
+        document.body.appendChild(container);
+    }
+
+    const root = ReactDOM.createRoot(container);
+    root.render(React.createElement(CustomerSupportWidget, config));
+
+    return {
+        unmount: () => root.unmount(),
+        container
+    };
+};
 
 // Styles
 import './styles/index.css';

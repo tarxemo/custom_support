@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Support CDN Demo</title>
+    <!-- 1. Styles (using local build path for demo purposes, would be unpkg in production) -->
+    <link rel="stylesheet" href="./dist/customer_support.css">
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 40px;
+            background: #f9fafb;
+            transition: all 0.3s;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        h1 {
+            color: #111827;
+        }
+
+        p {
+            color: #4b5563;
+            line-height: 1.6;
+        }
+
+        .code-block {
+            background: #1f2937;
+            color: #f3f4f6;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>CDN Integration Demo</h1>
+        <p>This page demonstrates how to integrate the Customer Support Widget into a non-React project using the UMD
+            bundle and the <code>init()</code> function.</p>
+
+        <div class="code-block">
+            <pre>
+&lt;script src="https://unpkg.com/react@18/umd/react.production.min.js"&gt;&lt;/script&gt;
+&lt;script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"&gt;&lt;/script&gt;
+&lt;script src="https://unpkg.com/@tarxemo/customer_support/dist/index.umd.js"&gt;&lt;/script&gt;
+
+&lt;script&gt;
+    CustomerSupport.init({
+        apiKey: 'YOUR_API_KEY',
+        theme: { primaryColor: '#2563eb' }
+    });
+&lt;/script&gt;
+            </pre>
+        </div>
+
+        <p>The widget should appear in the bottom-right corner of the screen.</p>
+    </div>
+
+    <!-- 2. React CDN (Peer dependencies) -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+
+    <!-- 3. Local Library Build (would be CDN in real usage) -->
+    <script src="./dist/index.umd.js"></script>
+
+    <!-- 4. Initialization -->
+    <script>
+        // Check if library is loaded correctly
+        if (typeof CustomerSupport !== 'undefined') {
+            CustomerSupport.init({
+                apiKey: 'demo-api-key',
+                theme: {
+                    primaryColor: '#6366f1',
+                    secondaryColor: '#4f46e5',
+                    position: 'bottom-right'
+                },
+                welcomeMessage: 'Welcome to the CDN Demo! How can I assist you today?'
+            });
+            console.log('Customer Support Widget initialized!');
+        } else {
+            console.error('Customer Support library failed to load.');
+        }
+    </script>
+</body>
+
+</html>

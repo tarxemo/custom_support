@@ -557,6 +557,8 @@
     background: var(--cs-bg-color);
     color: var(--cs-bg-text-color);
     line-height: 1.5;
+    overflow-y: hidden;
+    /* Prevent scrollbar when not needed */
 }
 
 .cs-input__textarea:focus {

@@ -20,7 +20,9 @@ export const ChatInput: React.FC<ChatInputProps> = ({
         const textarea = textareaRef.current;
         if (textarea) {
             textarea.style.height = 'auto';
-            textarea.style.height = `${Math.min(textarea.scrollHeight, 120)}px`;
+            const newHeight = Math.min(textarea.scrollHeight, 120);
+            textarea.style.height = `${newHeight}px`;
+            textarea.style.overflowY = textarea.scrollHeight > 120 ? 'auto' : 'hidden';
         }
     }, [message]);
 

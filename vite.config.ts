@@ -22,7 +22,7 @@ export default defineConfig({
             fileName: (format) => `index.${format}.js`
         },
         rollupOptions: {
-            external: ['react', 'react-dom', 'lucide-react'],
+            external: ['react', 'react-dom'],
             output: {
                 globals: {
                     react: 'React',
