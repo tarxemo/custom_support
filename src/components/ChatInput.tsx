@@ -1,4 +1,4 @@
-import React, { useState, FormEvent, KeyboardEvent, useRef, useEffect } from 'react';
+import * as React from 'react';
 import { Send, Loader2 } from 'lucide-react';
 
 interface ChatInputProps {
@@ -12,11 +12,11 @@ export const ChatInput: React.FC<ChatInputProps> = ({
     isLoading,
     placeholder = 'Type your message...'
 }) => {
-    const [message, setMessage] = useState('');
-    const textareaRef = useRef<HTMLTextAreaElement>(null);
+    const [message, setMessage] = React.useState('');
+    const textareaRef = React.useRef<HTMLTextAreaElement>(null);
 
     // Auto-resize textarea
-    useEffect(() => {
+    React.useEffect(() => {
         const textarea = textareaRef.current;
         if (textarea) {
             textarea.style.height = 'auto';
@@ -26,7 +26,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
         }
     }, [message]);
 
-    const handleSubmit = (e?: FormEvent | KeyboardEvent) => {
+    const handleSubmit = (e?: React.FormEvent | React.KeyboardEvent) => {
         e?.preventDefault();
         if (message.trim() && !isLoading) {
             onSendMessage(message);
@@ -38,7 +38,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
         }
     };
 
-    const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
             handleSubmit(e);

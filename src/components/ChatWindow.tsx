@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import * as React from 'react';
 import { X, Loader2, Trash2 } from 'lucide-react';
 import { ChatMessage } from './ChatMessage';
 import { ChatInput } from './ChatInput';
@@ -27,10 +27,10 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
     onDeleteMessage,
     onClearHistory
 }) => {
-    const messagesEndRef = useRef<HTMLDivElement>(null);
+    const messagesEndRef = React.useRef<HTMLDivElement>(null);
 
     // Auto-scroll to bottom when new messages arrive
-    useEffect(() => {
+    React.useEffect(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [messages]);
 

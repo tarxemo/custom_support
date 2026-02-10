@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import * as React from 'react';
 import { MessageCircle } from 'lucide-react';
 import { useCustomerSupport } from '../hooks/useCustomerSupport';
 import { ChatWindow } from './ChatWindow';
@@ -19,7 +19,7 @@ export const CustomerSupportWidget: React.FC<CustomerSupportConfig> = ({
     onMessageSent,
     onMessageReceived
 }) => {
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpen, setIsOpen] = React.useState(false);
 
     const {
         messages,

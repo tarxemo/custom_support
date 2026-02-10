@@ -1,4 +1,4 @@
-import { useState, Dispatch, SetStateAction, useEffect } from 'react';
+import * as React from 'react';
 
 /**
  * Custom hook for localStorage with TypeScript support
@@ -6,9 +6,9 @@ import { useState, Dispatch, SetStateAction, useEffect } from 'react';
 export function useLocalStorage<T>(
     key: string,
     initialValue: T
-): [T, Dispatch<SetStateAction<T>>] {
+): [T, React.Dispatch<React.SetStateAction<T>>] {
     // State to store our value
-    const [storedValue, setStoredValue] = useState<T>(() => {
+    const [storedValue, setStoredValue] = React.useState<T>(() => {
         try {
             const item = window.localStorage.getItem(key);
             return item ? JSON.parse(item) : initialValue;
@@ -19,7 +19,7 @@ export function useLocalStorage<T>(
     });
 
     // Use useEffect to update localStorage whenever storedValue changes
-    useEffect(() => {
+    React.useEffect(() => {
         try {
             window.localStorage.setItem(key, JSON.stringify(storedValue));
         } catch (error) {

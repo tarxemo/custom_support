@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect, useRef } from 'react';
+import * as React from 'react';
 import { CustomerSupportAPIClient } from '../api/client';
 import { useLocalStorage, generateSessionId } from './useLocalStorage';
 import type { Message, UseCustomerSupportOptions, UseCustomerSupportReturn } from '../types';
@@ -18,28 +18,32 @@ export function useCustomerSupport(options: UseCustomerSupportOptions): UseCusto
         SESSION_STORAGE_KEY,
         generateSessionId()
     );
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState<Error | null>(null);
+    const [isLoading, setIsLoading] = React.useState(false);
+    const [error, setError] = React.useState<Error | null>(null);
 
-    const apiClientRef = useRef<CustomerSupportAPIClient | null>(null);
+    const apiClientRef = React.useRef<CustomerSupportAPIClient | null>(null);
 
     // Initialize API client
-    useEffect(() => {
+    React.useEffect(() => {
         apiClientRef.current = new CustomerSupportAPIClient(apiKey, baseUrl);
     }, [apiKey, baseUrl]);
 
     /**
      * Clear error state
      */
-    const clearError = useCallback(() => {
+    const clearError = React.useCallback(() => {
         setError(null);
     }, []);
 
     /**
      * Send a message and get AI response
      */
-    const sendMessage = useCallback(
+    /**
+     * Send a message and get AI response
+     */
+    const sendMessage = React.useCallback(
         async (question: string) => {
+            // ... (rest of implementation is handled by surrounding code, checking start/end lines)
             if (!apiClientRef.current) {
                 const err = new Error('API client not initialized');
                 setError(err);
@@ -104,7 +108,7 @@ export function useCustomerSupport(options: UseCustomerSupportOptions): UseCusto
     /**
      * Load conversation history from backend
      */
-    const loadHistory = useCallback(async () => {
+    const loadHistory = React.useCallback(async () => {
         if (!apiClientRef.current || !sessionId) {
             return;
         }
@@ -135,7 +139,7 @@ export function useCustomerSupport(options: UseCustomerSupportOptions): UseCusto
     /**
      * Clear conversation history
      */
-    const clearHistory = useCallback(() => {
+    const clearHistory = React.useCallback(() => {
         setMessages([]);
         setSessionId(generateSessionId());
     }, [setMessages, setSessionId]);
@@ -143,7 +147,7 @@ export function useCustomerSupport(options: UseCustomerSupportOptions): UseCusto
     /**
      * Delete a specific message
      */
-    const deleteMessage = useCallback((id: string) => {
+    const deleteMessage = React.useCallback((id: string) => {
         setMessages((prev) => prev.filter((msg) => msg.id !== id));
     }, [setMessages]);
 

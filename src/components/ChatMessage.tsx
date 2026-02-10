@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import type { Message as MessageType } from '../types';
 import { ExternalLink, Trash2 } from 'lucide-react';
 
