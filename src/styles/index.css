@@ -363,9 +363,7 @@
     /* Allow shrinking below content size */
     animation: fadeIn 0.3s ease-in-out;
     position: relative;
-    /* For absolute delete button */
-    group: 'message';
-    /* For hover targeting */
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .cs-message:hover .cs-message__delete {
@@ -555,9 +553,10 @@
     resize: none;
     max-height: 120px;
     min-height: 44px;
-    transition: border-color 0.2s;
+    transition: border-color 0.2s, box-shadow 0.2s, height 0.1s ease-out;
     background: var(--cs-bg-color);
     color: var(--cs-bg-text-color);
+    line-height: 1.5;
 }
 
 .cs-input__textarea:focus {
@@ -568,10 +567,9 @@
 }
 
 .cs-input__textarea:disabled {
-    background: var(--cs-border-color);
-    /* Transparent overlay */
+    background: rgba(0, 0, 0, 0.05);
     cursor: not-allowed;
-    opacity: 0.5;
+    opacity: 0.7;
 }
 
 .cs-input__button {
@@ -585,13 +583,16 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.2s;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
 }
 
 .cs-input__button:hover:not(:disabled) {
     background: var(--cs-secondary-color);
     transform: scale(1.05);
+    box-shadow: var(--cs-shadow-sm);
 }
 
 .cs-input__button:active:not(:disabled) {
@@ -602,6 +603,25 @@
     background: var(--cs-border-color);
     cursor: not-allowed;
     opacity: 0.5;
+}
+
+.cs-input__spinner {
+    animation: cs-spin 1s linear infinite;
+}
+
+@keyframes cs-spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.cs-input__button--loading {
+    cursor: wait;
+    opacity: 0.8;
 }
 
 /* Mobile Responsive */

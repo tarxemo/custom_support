@@ -1,5 +1,5 @@
-import React, { useState, FormEvent, KeyboardEvent } from 'react';
-import { Send } from 'lucide-react';
+import React, { useState, FormEvent, KeyboardEvent, useRef, useEffect } from 'react';
+import { Send, Loader2 } from 'lucide-react';
 
 interface ChatInputProps {
     onSendMessage: (message: string) => void;
@@ -13,12 +13,26 @@ export const ChatInput: React.FC<ChatInputProps> = ({
     placeholder = 'Type your message...'
 }) => {
     const [message, setMessage] = useState('');
+    const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-    const handleSubmit = (e: FormEvent) => {
-        e.preventDefault();
+    // Auto-resize textarea
+    useEffect(() => {
+        const textarea = textareaRef.current;
+        if (textarea) {
+            textarea.style.height = 'auto';
+            textarea.style.height = `${Math.min(textarea.scrollHeight, 120)}px`;
+        }
+    }, [message]);
+
+    const handleSubmit = (e?: FormEvent | KeyboardEvent) => {
+        e?.preventDefault();
         if (message.trim() && !isLoading) {
             onSendMessage(message);
             setMessage('');
+            // Reset height after sending
+            if (textareaRef.current) {
+                textareaRef.current.style.height = 'auto';
+            }
         }
     };
 
@@ -32,6 +46,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
     return (
         <form className="cs-input" onSubmit={handleSubmit}>
             <textarea
+                ref={textareaRef}
                 className="cs-input__textarea"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
@@ -43,11 +58,15 @@ export const ChatInput: React.FC<ChatInputProps> = ({
             />
             <button
                 type="submit"
-                className="cs-input__button"
+                className={`cs-input__button ${isLoading ? 'cs-input__button--loading' : ''}`}
                 disabled={!message.trim() || isLoading}
                 aria-label="Send message"
             >
-                <Send size={20} />
+                {isLoading ? (
+                    <Loader2 size={20} className="cs-input__spinner" />
+                ) : (
+                    <Send size={20} />
+                )}
             </button>
         </form>
     );
