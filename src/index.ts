@@ -14,6 +14,7 @@ export { ChatInput } from './components/ChatInput';
 // Hooks
 export { useCustomerSupport } from './hooks/useCustomerSupport';
 export { useLocalStorage } from './hooks/useLocalStorage';
+export { useWidgetConfig } from './hooks/useWidgetConfig';
 
 // Types
 export type {
@@ -24,6 +25,8 @@ export type {
     ErrorResponse,
     ThemeConfig,
     Position,
+    WidgetMode,
+    WidgetConfigResponse,
     CustomerSupportConfig,
     UseCustomerSupportOptions,
     UseCustomerSupportReturn

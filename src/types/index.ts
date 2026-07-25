@@ -13,8 +13,9 @@ export interface Message {
 export interface Source {
     url: string;
     title: string;
-    similarity: number;
+    similarity: number | null;
     excerpt: string;
+    source_type?: 'manual' | 'crawled' | 'web';
 }
 
 export interface ChatResponse {
@@ -27,6 +28,7 @@ export interface ChatResponse {
         answer: string;
         sources: Source[];
         session_id: string;
+        used_web_search?: boolean;
     };
 }
 
@@ -73,6 +75,23 @@ export interface ThemeConfig {
 }
 
 export type Position = 'bottom-right' | 'bottom-left' | 'top-right' | 'top-left';
+
+export type WidgetMode = 'POPUP' | 'CUSTOM';
+
+export interface WidgetConfigResponse {
+    response: {
+        status: string;
+        message: string;
+        code: number;
+    };
+    data: {
+        mode: WidgetMode;
+        theme: ThemeConfig;
+        position: Position;
+        welcomeMessage?: string;
+        placeholder?: string;
+    };
+}
 
 export interface CustomerSupportConfig {
     apiKey: string;

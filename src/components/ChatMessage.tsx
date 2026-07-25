@@ -32,7 +32,9 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ message, onDelete }) =
                                         <span>{source.title}</span>
                                     </a>
                                     <span className="cs-message__source-similarity">
-                                        {Math.round(source.similarity * 100)}% match
+                                        {source.source_type === 'web'
+                                            ? 'Web result'
+                                            : `${Math.round((source.similarity ?? 0) * 100)}% match`}
                                     </span>
                                 </li>
                             ))}

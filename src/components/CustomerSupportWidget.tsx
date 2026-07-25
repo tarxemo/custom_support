@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { MessageCircle } from 'lucide-react';
 import { useCustomerSupport } from '../hooks/useCustomerSupport';
+import { useWidgetConfig } from '../hooks/useWidgetConfig';
 import { ChatWindow } from './ChatWindow';
 import type { CustomerSupportConfig } from '../types';
 
@@ -11,7 +12,7 @@ export const CustomerSupportWidget: React.FC<CustomerSupportConfig> = ({
     apiKey,
     baseUrl,
     theme,
-    position = 'bottom-right',
+    position,
     welcomeMessage,
     placeholder,
     className = '',
@@ -34,6 +35,21 @@ export const CustomerSupportWidget: React.FC<CustomerSupportConfig> = ({
         baseUrl,
         onError
     });
+
+    // Console-driven customization (colors, position, mode) fetched once
+    // on mount. Non-blocking and best-effort: explicit props below always
+    // win per-field over remote values, and while loading (or if this
+    // fetch fails) everything just falls back to local props/defaults -
+    // identical to today's behavior.
+    const { config: remoteConfig } = useWidgetConfig(apiKey, baseUrl);
+
+    const effectiveTheme = React.useMemo(
+        () => ({ ...remoteConfig?.theme, ...theme }),
+        [remoteConfig, theme]
+    );
+    const effectivePosition = position || remoteConfig?.position || 'bottom-right';
+    const effectiveWelcomeMessage = welcomeMessage ?? remoteConfig?.welcomeMessage;
+    const effectivePlaceholder = placeholder ?? remoteConfig?.placeholder;
 
     // Helper to determine if a color is light or dark and return appropriate text color
     const getContrastColor = (color: string) => {
@@ -100,24 +116,24 @@ export const CustomerSupportWidget: React.FC<CustomerSupportConfig> = ({
     const themeStyles = React.useMemo(() => {
         const styles: Record<string, string> = {};
 
-        const primary = theme?.primaryColor || '#6366f1';
-        const bg = theme?.backgroundColor || '#ffffff';
+        const primary = effectiveTheme?.primaryColor || '#6366f1';
+        const bg = effectiveTheme?.backgroundColor || '#ffffff';
         // If no text color provided, calculate based on background
-        const text = theme?.textColor || (getContrastColor(bg) === '#ffffff' ? '#ffffff' : '#1f2937');
+        const text = effectiveTheme?.textColor || (getContrastColor(bg) === '#ffffff' ? '#ffffff' : '#1f2937');
 
         // Extended theme colors with smart defaults
-        const success = theme?.successColor || '#4ade80'; // Green
-        const error = theme?.errorColor || '#ef4444'; // Red
-        const border = theme?.borderColor || colorToRgba(text, 0.1);
-        const shadow = theme?.shadowColor || 'rgba(0, 0, 0, 0.1)';
+        const success = effectiveTheme?.successColor || '#4ade80'; // Green
+        const error = effectiveTheme?.errorColor || '#ef4444'; // Red
+        const border = effectiveTheme?.borderColor || colorToRgba(text, 0.1);
+        const shadow = effectiveTheme?.shadowColor || 'rgba(0, 0, 0, 0.1)';
 
         // Base
         styles['--cs-primary-color'] = primary;
-        styles['--cs-secondary-color'] = theme?.secondaryColor || primary;
+        styles['--cs-secondary-color'] = effectiveTheme?.secondaryColor || primary;
         styles['--cs-bg-color'] = bg;
         styles['--cs-text-color'] = text;
-        styles['--cs-font-family'] = theme?.fontFamily || 'inherit';
-        styles['--cs-border-radius'] = theme?.borderRadius || '12px';
+        styles['--cs-font-family'] = effectiveTheme?.fontFamily || 'inherit';
+        styles['--cs-border-radius'] = effectiveTheme?.borderRadius || '12px';
 
         // Functional Colors
         styles['--cs-success-color'] = success;
@@ -135,13 +151,13 @@ export const CustomerSupportWidget: React.FC<CustomerSupportConfig> = ({
         styles['--cs-bg-text-color'] = text;
 
         // Derived or explicit overrides
-        styles['--cs-button-color'] = theme?.buttonColor || primary;
-        styles['--cs-user-message-color'] = theme?.userMessageColor || primary;
-        styles['--cs-user-text-color'] = getContrastColor(theme?.userMessageColor || primary);
+        styles['--cs-button-color'] = effectiveTheme?.buttonColor || primary;
+        styles['--cs-user-message-color'] = effectiveTheme?.userMessageColor || primary;
+        styles['--cs-user-text-color'] = getContrastColor(effectiveTheme?.userMessageColor || primary);
 
         // Assistant message color
         const isDarkBg = getContrastColor(bg) === '#ffffff';
-        styles['--cs-assistant-message-color'] = theme?.assistantMessageColor ||
+        styles['--cs-assistant-message-color'] = effectiveTheme?.assistantMessageColor ||
             (isDarkBg ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.05)');
         styles['--cs-assistant-text-color'] = text;
 
@@ -149,7 +165,7 @@ export const CustomerSupportWidget: React.FC<CustomerSupportConfig> = ({
         styles['--cs-focus-ring'] = colorToRgba(primary, 0.2);
 
         return styles as React.CSSProperties;
-    }, [theme]);
+    }, [effectiveTheme]);
 
     const handleSendMessage = async (message: string) => {
         onMessageSent?.(message);
@@ -169,9 +185,16 @@ export const CustomerSupportWidget: React.FC<CustomerSupportConfig> = ({
         }
     };
 
+    // Only suppress the popup once the console config has resolved and
+    // explicitly confirmed CUSTOM mode - while loading, or on fetch failure,
+    // render normally so a network hiccup never hides the widget.
+    if (remoteConfig?.mode === 'CUSTOM') {
+        return null;
+    }
+
     return (
         <div
-            className={`cs-widget cs-widget--${position} ${isOpen ? 'cs-widget--open' : ''} ${className}`}
+            className={`cs-widget cs-widget--${effectivePosition} ${isOpen ? 'cs-widget--open' : ''} ${className}`}
             style={themeStyles}
         >
             {/* Inject styles automatically */}
@@ -185,8 +208,8 @@ export const CustomerSupportWidget: React.FC<CustomerSupportConfig> = ({
                     onClose={() => setIsOpen(false)}
                     isLoading={isLoading}
                     error={error}
-                    placeholder={placeholder}
-                    welcomeMessage={welcomeMessage}
+                    placeholder={effectivePlaceholder}
+                    welcomeMessage={effectiveWelcomeMessage}
                     onDeleteMessage={deleteMessage}
                     onClearHistory={clearHistory}
                 />

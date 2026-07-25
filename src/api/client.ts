@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosError } from 'axios';
-import type { ChatResponse, ConversationHistoryResponse, ErrorResponse } from '../types';
+import type { ChatResponse, ConversationHistoryResponse, ErrorResponse, WidgetConfigResponse } from '../types';
 
 const DEFAULT_BASE_URL = 'https://customers-services.tarxemo.com/api';
 
@@ -76,6 +76,22 @@ export class CustomerSupportAPIClient {
             }
             throw new Error('Failed to load conversation history');
         }
+    }
+
+    /**
+     * Fetch console-driven widget customization (theme, position, mode).
+     * Callers should treat failures as "no remote config" and fall back
+     * to local defaults/props - this is a non-critical enhancement, not
+     * something the widget should ever hard-fail on.
+     */
+    async getWidgetConfig(): Promise<WidgetConfigResponse['data']> {
+        const response = await this.client.get<WidgetConfigResponse>('/chat/widget-config/');
+
+        if (response.data.response.status !== 'success') {
+            throw new Error(response.data.response.message);
+        }
+
+        return response.data.data;
     }
 
     /**
